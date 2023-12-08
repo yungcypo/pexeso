@@ -16,6 +16,7 @@ public class Hra {
     private ArrayList<String> zoznamDostupnychKarticiek;
     private ArrayList<Karticka> odokryteKarticky;
     private ArrayList<Karticka> uhadnuteKarticky;
+    private TextVyhry textVyhry;
     private int rozmerObrazku;
     private boolean hraSkoncila;
 
@@ -30,6 +31,7 @@ public class Hra {
         this.zoznamDostupnychKarticiek = new ArrayList<String>();
         this.odokryteKarticky = new ArrayList<Karticka>();
         this.uhadnuteKarticky = new ArrayList<Karticka>();
+        this.textVyhry = new TextVyhry();
         this.rozmerObrazku = 64;
         this.hraSkoncila = false;
 
@@ -55,15 +57,15 @@ public class Hra {
         if (!this.hraSkoncila && x / 64 < this.poleKarticiek.length && y / 64 < this.poleKarticiek.length) {
             // karticka, do ktorej klikol hrac
             Karticka hladanaKarticka = this.poleKarticiek[x / 64][y / 64];
-            // ak este karticka nie je uhadnuta
-            if (!this.uhadnuteKarticky.contains(hladanaKarticka)) {
+            // ak este karticka nie je uhadnuta ani odokryta
+            if (!this.uhadnuteKarticky.contains(hladanaKarticka) && !this.odokryteKarticky.contains(hladanaKarticka)) {
                 // odokry karticku a pridaj do zoznamu odokrytych
                 hladanaKarticka.aktualizuj(Stav.ODOKRYTE);
                 this.odokryteKarticky.add(hladanaKarticka);
                 // ak su 2 karticky odokryte
                 if (this.odokryteKarticky.size() == 2) {
                     // ak su 2 odokryte karticky rovnake zmen stav na oboch uhadnute, pridaj do zoznamu uhadnutych a vymaz obsah zoznamu odokrytych
-                    if (this.odokryteKarticky.get(0).getObrazok().equals(this.odokryteKarticky.get(1).getObrazok())) {
+                    if (this.odokryteKarticky.get(0).getObrazok().equals(this.odokryteKarticky.get(1).getObrazok()) && this.odokryteKarticky.get(0) != this.odokryteKarticky.get(1)) {
                         for (Karticka k : this.odokryteKarticky) {
                             k.aktualizuj(Stav.UHADNUTE);
                             this.uhadnuteKarticky.add(k);
@@ -85,10 +87,18 @@ public class Hra {
                     this.odokryteKarticky.clear();
                 }
             }
-            // ak je uhadnutych 16 karticiek - vsetky - skonci hru
+            // ak je uhadnutych 16 karticiek - vsetky - skonci hru a daj text navrch
             if (this.uhadnuteKarticky.size() == 16) {
                 this.hraSkoncila = true;
-                JOptionPane.showMessageDialog(null, "Vyhrali ste!");
+                //this.textVyhry.dajNavrch();
+                /*
+                 * mal som problem s JOptionPane
+                 * okno so spravou sa zobrazilo, ked hrac klikol na posleny par karticiek
+                 * problem bol v tom, ze karticky sa este nestihli otocit
+                 * karticky sa otocili az ked pouzivatel zavrel okno JOptionPane
+                 * nefungovalo to na 100% tak, ako som si predstavoval, preto som spravil triedu TextVyhry
+                 */
+                //JOptionPane.showMessageDialog(null, "Vyhrali ste!");
             }
         }
     }
