@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
+
+
 /**
  * Write a description of class Hra here.
  * 
