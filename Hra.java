@@ -1,6 +1,7 @@
 import fri.shapesge.Manazer;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 /**
  * Write a description of class Hra here.
@@ -15,7 +16,6 @@ public class Hra {
     private ArrayList<String> zoznamDostupnychKarticiek;
     private ArrayList<Karticka> odokryteKarticky;
     private ArrayList<Karticka> uhadnuteKarticky;
-    private TextVyhry textVyhry;
     private int rozmerObrazku;
     private boolean hraSkoncila;
 
@@ -30,7 +30,6 @@ public class Hra {
         this.zoznamDostupnychKarticiek = new ArrayList<String>();
         this.odokryteKarticky = new ArrayList<Karticka>();
         this.uhadnuteKarticky = new ArrayList<Karticka>();
-        this.textVyhry = new TextVyhry();
         this.rozmerObrazku = 64;
         this.hraSkoncila = false;
 
@@ -86,10 +85,10 @@ public class Hra {
                     this.odokryteKarticky.clear();
                 }
             }
-            // ak je uhadnutych 16 karticiek - vsetky - skonci hru a daj text navrch
+            // ak je uhadnutych 16 karticiek - vsetky - skonci hru
             if (this.uhadnuteKarticky.size() == 16) {
                 this.hraSkoncila = true;
-                this.textVyhry.dajNavrch();
+                JOptionPane.showMessageDialog(null, "Vyhrali ste!");
             }
         }
     }
