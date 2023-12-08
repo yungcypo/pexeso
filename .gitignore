@@ -1,2 +1,6 @@
 *.class
 *.ctxt
+*.bluej
+.idea/*
+.vscode/*
+out/*
